@@ -19,7 +19,7 @@ enum Slope {
 
 struct ChainSettings {
     float peakFreq{ 0 }, peakGainInDbs{ 0 }, peakQuality{ 1.0f };
-    float lowPassFreq{ 0 }, highPassFreq{ 0 };
+    float lowCutFreq{ 0 }, highCutFreq{ 0 };
     Slope lowCutSlope{ Slope::Slope_12 }, highCutSlope{ Slope::Slope_12 };
 };
 
@@ -88,9 +88,9 @@ private:
     MonoChain leftChain, rightChain;
 
     enum ChainPositions {
-        LowPass,
+        LowCut,
         Peak,
-        HighPass
+        HighCut
     };
 
     void updatePeakFilter(const ChainSettings& chainSettings);
