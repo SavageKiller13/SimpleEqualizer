@@ -284,12 +284,24 @@ SimpleEQAudioProcessorEditor::SimpleEQAudioProcessorEditor(SimpleEQAudioProcesso
 
     peakFreqSlider.labels.add({ 0.0f, "20Hz" });
     peakFreqSlider.labels.add({ 1.0f, "20kHz" });
+    peakGainSlider.labels.add({ 0.0f, "-24dB" });
+    peakGainSlider.labels.add({ 1.0f, "+24dB" });
+    peakQualitySlider.labels.add({ 0.0f, "0.1" });
+    peakQualitySlider.labels.add({ 1.0f, "10.0" });
+    lowCutFreqSlider.labels.add({ 0.0f, "20Hz" });
+    lowCutFreqSlider.labels.add({ 1.0f, "20kHz" });
+    highCutFreqSlider.labels.add({ 0.0f, "20Hz" });
+    highCutFreqSlider.labels.add({ 1.0f, "20kHz" });
+    lowCutSlopeSlider.labels.add({ 0.0f, "12" });
+    lowCutSlopeSlider.labels.add({ 1.0f, "48" });
+    highCutSlopeSlider.labels.add({ 0.0f, "12" });
+    highCutSlopeSlider.labels.add({ 1.0f, "48" });
 
     for (auto* comp : getComps()) {
         addAndMakeVisible(comp);
     }
 
-    setSize(600, 400);
+    setSize(600, 500);
 }
 
 SimpleEQAudioProcessorEditor::~SimpleEQAudioProcessorEditor()
@@ -313,9 +325,12 @@ void SimpleEQAudioProcessorEditor::resized()
     // subcomponents in your editor..
 
     auto bounds = getLocalBounds();
-    auto responseArea = bounds.removeFromTop(bounds.getHeight() * 0.33);
+    float hRatio = 25.0f / 100.0f; //JUCE_LIVE_CONSTANT(33) / 100.0f
+    auto responseArea = bounds.removeFromTop(bounds.getHeight() * hRatio);
 
     responseCurveComponent.setBounds(responseArea);
+
+    bounds.removeFromTop(5);
 
     auto lowCutArea = bounds.removeFromLeft(bounds.getWidth() * 0.33);
     auto highCutArea = bounds.removeFromRight(bounds.getWidth() * 0.5);
