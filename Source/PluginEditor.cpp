@@ -313,7 +313,7 @@ void ResponseCurveComponent::resized() {
 
     //g.drawRect(getAnalysisArea());
 
-    g.setColour(Colours::lightslategrey);
+    g.setColour(Colours::lightgrey);
 
     const int fontHeight = 10;
     g.setFont(fontHeight);
@@ -343,6 +343,31 @@ void ResponseCurveComponent::resized() {
 
         g.drawFittedText(str, r, juce::Justification::centred, 1);
     }
+
+    for (auto gDB : gain) {
+        auto y = jmap(gDB, -24.0f, 24.0f, float(bottom), float(top));
+
+        String str;
+        if (gDB > 0)
+            str << "+";
+        str << gDB;
+
+        auto textWidth = g.getCurrentFont().getStringWidth(str);
+
+        Rectangle<int> r;
+        r.setSize(textWidth, fontHeight);
+        r.setX(getWidth() - textWidth - 1);
+        r.setCentre(r.getCentreX(), y);
+
+        if (gDB > 0)
+            g.setColour(Colours::lightgreen);
+        else if (gDB == 0)
+            g.setColour(Colours::lightgrey);
+        else if (gDB < 0)
+            g.setColour(Colours::red);
+
+        g.drawFittedText(str, r, juce::Justification::centred, 1);
+    }
 }
 
 juce::Rectangle<int> ResponseCurveComponent::getRenderArea() {
@@ -354,7 +379,7 @@ juce::Rectangle<int> ResponseCurveComponent::getRenderArea() {
 
     bounds.removeFromTop(12);
     bounds.removeFromBottom(1);
-    bounds.reduce(15, 0);
+    bounds.reduce(20, 0);
 
     return bounds;
 }
