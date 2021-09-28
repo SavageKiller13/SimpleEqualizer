@@ -243,7 +243,25 @@ private:
 //==============================================================================
 
 struct PowerButton : juce::ToggleButton {};
-struct AnalyzerButton : juce::ToggleButton {};
+struct AnalyzerButton : juce::ToggleButton {
+    void resized() override {
+        auto bounds = getLocalBounds();
+        auto insetRect = bounds.reduced(4);
+
+        randPath.clear();
+
+        juce::Random r;
+
+        randPath.startNewSubPath(insetRect.getX(),
+            insetRect.getY() + insetRect.getHeight() * r.nextFloat());
+
+        for (auto x = insetRect.getX() + 1; x < insetRect.getRight(); x += 2) {
+            randPath.lineTo(x, insetRect.getY() + insetRect.getHeight() * r.nextFloat());
+        }
+    }
+
+    juce::Path randPath;
+};
 
 /**
 */
