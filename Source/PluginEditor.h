@@ -262,6 +262,12 @@ private:
 
     Attachment peakFreqAttachment, peakGainAttachment, peakQualityAttachment, lowCutFreqAttachment, highCutFreqAttachment, lowCutSlopeAttachment, highCutSlopeAttachment;
 
+    juce::ToggleButton lowCutBypassButton, highCutBypassButton, peakBypassButton, analyzerEnabledButton;
+
+    using ButtonAttachment = APVTS::ButtonAttachment;
+    ButtonAttachment lowCutBypassButtonAttachment, highCutBypassButtonAttachment, peakBypassButtonAttachement, analyzerEnabledButtonAttachment;
+
+
     std::vector<juce::Component*> getComps();
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (SimpleEQAudioProcessorEditor)
